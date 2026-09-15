@@ -1,0 +1,6 @@
+<script setup>
+import { computed, ref } from 'vue'
+import { artists } from '../data/siteData'
+const query = ref(''); const list = computed(() => artists.filter((artist) => `${artist.name} ${artist.kind} ${artist.town}`.toLowerCase().includes(query.value.toLowerCase())))
+</script>
+<template><main class="page-shell p-4 p-lg-5"><span class="badge rounded-pill eyebrow mb-3">Annuaire local</span><h1 class="fw-bold mb-2">Artistes & associations</h1><p class="text-secondary mb-4">Celles et ceux qui font vivre la culture mahoraise au quotidien.</p><input v-model="query" class="form-control mb-4 col-lg-6" placeholder="Rechercher par nom, discipline ou village"><div class="row g-3"><div v-for="artist in list" :key="artist.id" class="col-md-4"><article class="card border-0 shadow-sm h-100 content-card" @click="$emit('open-article', artist)"><img :src="artist.image" :alt="artist.name" class="card-img-top object-fit-cover" style="height:190px"><div class="card-body"><span class="badge badge-festival mb-2">{{ artist.kind }}</span><h2 class="h5 fw-bold">{{ artist.name }}</h2><p class="small text-secondary mb-2">{{ artist.town }}</p><p class="small mb-0">{{ artist.description }}</p></div></article></div></div></main></template>
